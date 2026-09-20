@@ -1,0 +1,17 @@
+[Unit]
+Description=Relay private Codex desktop companion
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/codex-relay-mobile
+EnvironmentFile=%h/.config/relay/bridge.env
+ExecStart=%h/codex-relay-mobile/.venv/bin/python %h/codex-relay-mobile/Bridge/server.py
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target
