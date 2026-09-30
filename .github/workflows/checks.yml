@@ -26,3 +26,18 @@ jobs:
         working-directory: Web
       - run: npm run build
         working-directory: Web
+  native-mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build native macOS app
+        run: Scripts/build-macos.sh
+      - name: Check iOS source compatibility
+        run: xcrun swiftc -typecheck -swift-version 5 -target arm64-apple-ios18.0 -sdk "$(xcrun --sdk iphoneos --show-sdk-path)" Relay/RelayApp.swift Relay/Core/*.swift Relay/Views/*.swift
+      - name: Verify native Keychain persistence
+        run: |
+          xcrun swiftc -parse-as-library Relay/Core/Models.swift Relay/Core/Keychain.swift Tests/KeychainChecks.swift -o "$RUNNER_TEMP/keychain-checks"
+          test_account="$(uuidgen)"
+          trap '"$RUNNER_TEMP/keychain-checks" delete "$test_account"' EXIT
+          "$RUNNER_TEMP/keychain-checks" write "$test_account"
+          "$RUNNER_TEMP/keychain-checks" read "$test_account"

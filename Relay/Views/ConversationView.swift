@@ -30,7 +30,7 @@ struct ConversationView: View {
                                 .onAppear { followBottom = true }.onDisappear { followBottom = false }
                         }.padding(.horizontal, 20).padding(.vertical, 22).frame(maxWidth: 820)
                     }
-                    .scrollDismissesKeyboard(.interactively)
+                    .relayDismissKeyboard()
                     .defaultScrollAnchor(.bottom)
                     .onChange(of: c.revision) { _, _ in if followBottom { proxy.scrollTo("bottom", anchor: .bottom) } }
                     .overlay(alignment: .bottomTrailing) {
@@ -56,12 +56,12 @@ struct ConversationView: View {
                 ContentUnavailableView("Pick up where you left off", systemImage: "terminal", description: Text("Choose a task from your VM to see its conversation and continue working."))
             }
         }
-        .background(Color(uiColor: .systemBackground))
+        .background(Color.relayBackground)
         .navigationTitle(store.conversation?.title ?? "Workspace")
-        .navigationBarTitleDisplayMode(.inline)
+        .relayInlineTitle()
         .toolbar {
             if store.conversation != nil {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .relayTrailing) {
                     Menu {
                         Button("Task details", systemImage: "info.circle") { showDetails = true }
                         if store.conversation?.diff != nil { Button("View changes", systemImage: "chevron.left.forwardslash.chevron.right") { showDiff = true } }
@@ -74,7 +74,7 @@ struct ConversationView: View {
         .sheet(isPresented: $showDiff) {
             NavigationStack {
                 ScrollView([.horizontal, .vertical]) { Text(store.conversation?.diff ?? "").font(.system(.caption, design: .monospaced)).textSelection(.enabled).padding() }
-                    .navigationTitle("Changes").navigationBarTitleDisplayMode(.inline)
+                    .navigationTitle("Changes").relayInlineTitle()
                     .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { showDiff = false } } }
             }
         }
@@ -121,20 +121,20 @@ struct ConversationView: View {
                 if c.isRunning, let turn = c.activeTurnId {
                     Button { Task { await store.command("stop", fields: ["expectedTurnId": .string(turn)]) } } label: {
                         Image(systemName: "stop.fill").font(.system(size: 12)).frame(width: 36, height: 36)
-                            .background(Color(uiColor: .tertiarySystemFill), in: Circle())
+                            .background(Color.relayFill, in: Circle())
                     }.disabled(!store.live || store.sending).accessibilityLabel("Stop current turn")
                 }
                 Button { Task { await store.send() } } label: {
                     Group {
-                        if store.sending { ProgressView().tint(Color(uiColor: .systemBackground)) }
+                        if store.sending { ProgressView().tint(Color.relayBackground) }
                         else { Image(systemName: "arrow.up").font(.system(size: 16, weight: .semibold)) }
-                    }.frame(width: 36, height: 36).background(Color.primary, in: Circle()).foregroundStyle(Color(uiColor: .systemBackground))
+                    }.frame(width: 36, height: 36).background(Color.primary, in: Circle()).foregroundStyle(Color.relayBackground)
                 }.disabled(store.draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !store.live || store.sending || store.pending != nil)
                     .opacity(store.draft.isEmpty || !store.live || store.pending != nil ? 0.35 : 1)
                     .accessibilityLabel(c.isRunning ? "Send follow-up" : "Send prompt")
             }
         }
-        .padding(16).background(Color(uiColor: .secondarySystemBackground), in: RoundedRectangle(cornerRadius: 24))
+        .padding(16).background(Color.relaySecondaryBackground, in: RoundedRectangle(cornerRadius: 24))
         .overlay(RoundedRectangle(cornerRadius: 24).stroke(Color.primary.opacity(0.06), lineWidth: 1))
         .padding(.horizontal, 14).padding(.top, 8).padding(.bottom, 12)
     }
@@ -152,8 +152,8 @@ struct ConversationView: View {
                     Section("Workspace") { Text(c.cwd).font(.system(.caption, design: .monospaced)).textSelection(.enabled) }
                     Section { Text("This task uses the model and permissions selected in Codex on your VM. Change those settings on desktop for this version.").font(.footnote).foregroundStyle(.secondary) }
                 }
-            }.navigationTitle("Task details").navigationBarTitleDisplayMode(.inline)
+            }.navigationTitle("Task details").relayInlineTitle()
                 .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { showDetails = false } } }
-        }.presentationDetents([.medium, .large])
+        }.relayDetailsPresentation()
     }
 }
