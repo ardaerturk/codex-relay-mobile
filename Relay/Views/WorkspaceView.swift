@@ -30,7 +30,7 @@ struct WorkspaceView: View {
             }
             .navigationTitle("Relay")
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .relayTrailing) {
                     Button { store.showSettings = true } label: { Image(systemName: "slider.horizontal.3") }
                         .accessibilityLabel("Connection settings")
                 }
@@ -64,11 +64,11 @@ struct WorkspaceView: View {
             Spacer()
             Image(systemName: "terminal").font(.system(size: 42, weight: .light))
             Text("Your workspace.\nWithin reach.").font(.system(size: 34, weight: .semibold, design: .rounded)).tracking(-1)
-            Text("Continue your Codex tasks from your phone. Your code, tools, and Azure connection stay on your VM.")
+            Text("Continue your Codex tasks from this device. Your code, tools, and Azure connection stay on your VM.")
                 .font(.body).foregroundStyle(.secondary).lineSpacing(4)
             Button { store.showSettings = true } label: {
                 HStack { Text("Connect your VM").fontWeight(.semibold); Spacer(); Image(systemName: "arrow.right") }
-                    .padding(18).background(Color.primary, in: RoundedRectangle(cornerRadius: 16)).foregroundStyle(Color(uiColor: .systemBackground))
+                    .padding(18).background(Color.primary, in: RoundedRectangle(cornerRadius: 16)).foregroundStyle(Color.relayBackground)
             }.buttonStyle(.plain)
             Text("Private connection over Tailscale").font(.caption).foregroundStyle(.secondary)
             Spacer(); Spacer()
@@ -87,7 +87,7 @@ struct WorkspaceView: View {
                 }
                 Spacer()
                 Image(systemName: "chevron.right").font(.caption2).foregroundStyle(.secondary)
-            }.padding(18).background(Color(uiColor: .secondarySystemBackground))
+            }.padding(18).background(Color.relaySecondaryBackground)
         }.buttonStyle(.plain)
     }
 }

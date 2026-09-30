@@ -19,13 +19,13 @@ struct ConnectionView: View {
                 }.listRowBackground(Color.clear)
                 Section("Your VM") {
                     TextField("https://your-vm.ts.net:8443", text: $address)
-                        .textContentType(.URL).keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
+                        .relayCredentialInput(isURL: true)
                         .accessibilityLabel("Bridge HTTPS address")
                     HStack {
                         Group {
                             if showToken { TextField("Pairing credential", text: $token) }
                             else { SecureField("Pairing credential", text: $token) }
-                        }.textInputAutocapitalization(.never).autocorrectionDisabled()
+                        }.relayCredentialInput()
                         Button { showToken.toggle() } label: { Image(systemName: showToken ? "eye.slash" : "eye") }
                             .accessibilityLabel(showToken ? "Hide credential" : "Show credential")
                     }
@@ -41,7 +41,7 @@ struct ConnectionView: View {
                         }
                     }.disabled(store.loading || token.isEmpty || address.isEmpty)
                 } footer: {
-                    Text("Your Azure key stays on the VM. The pairing credential is stored in this iPhone’s Keychain and is not synced to iCloud.")
+                    Text("Your Azure key stays on the VM. The pairing credential is stored securely in this device’s Keychain and is not synced to iCloud.")
                 }
                 if let error = store.error { Section { Text(error).font(.footnote).foregroundStyle(.orange) } }
                 if store.connected {
@@ -56,8 +56,9 @@ struct ConnectionView: View {
                         .font(.footnote).foregroundStyle(.secondary)
                 }
             }
-            .navigationTitle("Connection").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Connection").relayInlineTitle()
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Done") { dismiss() } } }
+            .relayConnectionSize()
             .onAppear { address = store.address; token = Keychain.read(account: store.address) ?? "" }
         }
     }

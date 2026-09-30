@@ -8,13 +8,13 @@ struct TimelineRow: View {
             HStack { Spacer(minLength: 32)
                 Text(item.text).font(.system(size: 16)).textSelection(.enabled).lineSpacing(4)
                     .padding(.horizontal, 17).padding(.vertical, 13)
-                    .background(Color(uiColor: .secondarySystemBackground), in: RoundedRectangle(cornerRadius: 20))
+                    .background(Color.relaySecondaryBackground, in: RoundedRectangle(cornerRadius: 20))
             }
         } else if item.kind == "agentMessage" {
             VStack(alignment: .leading, spacing: 12) {
                 MarkdownContent(text: item.text)
                 if item.phase == "final" {
-                    Button { UIPasteboard.general.string = item.text } label: { Image(systemName: "doc.on.doc").font(.caption).foregroundStyle(.secondary) }
+                    Button { Clipboard.copy(item.text) } label: { Image(systemName: "doc.on.doc").font(.caption).foregroundStyle(.secondary) }
                         .accessibilityLabel("Copy response")
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
@@ -61,11 +61,11 @@ struct MarkdownContent: View {
                         HStack {
                             Text(language.isEmpty ? "Code" : language).font(.caption2).foregroundStyle(.secondary)
                             Spacer()
-                            Button { UIPasteboard.general.string = code } label: { Label("Copy", systemImage: "doc.on.doc").font(.caption2) }
+                            Button { Clipboard.copy(code) } label: { Label("Copy", systemImage: "doc.on.doc").font(.caption2) }
                         }.padding(12)
                         Divider()
                         ScrollView(.horizontal) { Text(code).font(.system(size: 12, design: .monospaced)).textSelection(.enabled).padding(12) }
-                    }.background(Color(uiColor: .secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
+                    }.background(Color.relaySecondaryBackground, in: RoundedRectangle(cornerRadius: 12))
                 } else if !part.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     Text(.init(part.trimmingCharacters(in: .newlines))).font(.system(size: 16)).lineSpacing(5).textSelection(.enabled)
                 }

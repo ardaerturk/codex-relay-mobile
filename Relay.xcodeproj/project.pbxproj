@@ -11,6 +11,7 @@
 		0614DF9157A754582B010719 /* RelayAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A138AA7A29C0F97755932A83 /* RelayAPI.swift */; };
 		0989D2A09D399E50F577B425 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7B24978B4B88767498A9394 /* Assets.xcassets */; };
 		0D4CBDF9BEC50AA089855EA0 /* RelayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B8B2D07928372C4C90B162 /* RelayStore.swift */; };
+		1F3806C502277C6D9FEE34B0 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648DBC7F0A23807CDABD37BD /* Platform.swift */; };
 		1F44520B9C38CD64C23DCA2F /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CD42C7D9B36D4E5200A87 /* Keychain.swift */; };
 		426431987217CAC62620E47E /* RelayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF96B1390200E0C0F27A28F /* RelayApp.swift */; };
 		444DC396F71FB6E9AE4046F7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE2C58E4A93F58C1F617AC9 /* Foundation.framework */; };
@@ -26,6 +27,7 @@
 		044A7E80F54621AD45279FAF /* Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Models.swift; path = Core/Models.swift; sourceTree = "<group>"; };
 		2AF96B1390200E0C0F27A28F /* RelayApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RelayApp.swift; sourceTree = "<group>"; };
 		52B8B2D07928372C4C90B162 /* RelayStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RelayStore.swift; path = Core/RelayStore.swift; sourceTree = "<group>"; };
+		648DBC7F0A23807CDABD37BD /* Platform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Platform.swift; path = Core/Platform.swift; sourceTree = "<group>"; };
 		66A121C32DBCA222CB3676A9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		A138AA7A29C0F97755932A83 /* RelayAPI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RelayAPI.swift; path = Core/RelayAPI.swift; sourceTree = "<group>"; };
 		A29B0AE6F0EC0A686D76FF0D /* ConnectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConnectionView.swift; path = Views/ConnectionView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				CA51EA9336CE23965E7A0FE0 /* WorkspaceView.swift */,
 				66A121C32DBCA222CB3676A9 /* PrivacyInfo.xcprivacy */,
 				E7B24978B4B88767498A9394 /* Assets.xcassets */,
+				648DBC7F0A23807CDABD37BD /* Platform.swift */,
 			);
 			name = Relay;
 			path = Relay;
@@ -180,6 +183,7 @@
 				02AD73D101E2020DCC4A6145 /* ConversationView.swift in Sources */,
 				F685DD9D808C17F9A364096E /* TimelineRow.swift in Sources */,
 				E9C4B9195737A2697C6D6FA6 /* WorkspaceView.swift in Sources */,
+				1F3806C502277C6D9FEE34B0 /* Platform.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,7 +2,7 @@
 
 A private mobile companion for an existing Codex desktop session. Open a task from your phone, follow its progress, and send a prompt to the same task running on your host machine.
 
-The main client is an installable Home Screen web app. A SwiftUI client is included as optional source. Models, provider credentials, repositories and tools remain on the host. Relay does not call a model from your phone.
+The main client is an installable Home Screen web app. Native macOS and iOS SwiftUI client sources are also included. Models, provider credentials, repositories and tools remain on the host. Relay does not call a model from your phone.
 
 **Status: early, experimental desktop integration.** This is an independent project, not an official OpenAI client or a complete Codex replica. The bridge uses internal desktop IPC; it is not a supported public Codex API. Review the compatibility and verification notes before relying on it.
 
@@ -153,7 +153,22 @@ Verification to date:
 - Browser QA checked mobile widths, task search, tool disclosures, test-send acknowledgment, appearance, sign-in persistence and logout with isolated fixtures.
 - Actual iPhone Home Screen installation, software-keyboard behavior, and a live model send/stop/approval cycle still require end-to-end verification.
 
-### Optional SwiftUI client
+### Native Mac app
+
+On a Mac with Xcode command-line tools, build and open the native app:
+
+```sh
+Scripts/build-macos.sh
+open build/macos/Relay.app
+```
+
+This targets macOS 14+ and uses the Mac's login Keychain. The build is locally ad-hoc signed; an Apple developer membership is not required to build and run it locally. It is not a notarized distribution build.
+
+The earlier Mac Catalyst preview returned `Keychain is unavailable (-34018)` because it lacked the entitlement required by the data-protection Keychain. Use this native Mac build for local use. Credentials remain in Keychain; there is no plaintext or in-memory-only fallback. iOS continues using its device-only data-protection Keychain.
+
+Native Keychain save, update, read in a second process, and deletion are covered by `Tests/KeychainChecks.swift`. A local app connection also verified credential storage and real task-list retrieval from a private host.
+
+### iOS client
 
 Open `Relay.xcodeproj` in Xcode, choose your own bundle identifier and signing team, and enter your private bridge URL in the connection screen. The source targets iOS 18+. It stores pairing credentials in the device Keychain rather than iCloud.
 
